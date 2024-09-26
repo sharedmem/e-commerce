@@ -1,0 +1,22 @@
+# See https://pre-commit.com for more information and
+# https://pre-commit.com/hooks.html for more hooks.
+repos:
+    # Pre-commit
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+        # General
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+        # Git
+      - id: check-added-large-files
+        # Python
+      - id: check-ast
+      - id: check-docstring-first
+
+    # Black
+  - repo: https://github.com/psf/black
+    # If there is a version bump, bump it also in "Pipfile" file.
+    rev: 24.8.0
+    hooks:
+      - id: black
