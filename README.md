@@ -3,19 +3,15 @@ This README file is best readable in [markdown
 previewer](https://www.digitalocean.com/community/markdown).
 
 ## Requirements
-- [Git](https://git-scm.com/downloads)
 - [Python](https://www.python.org/downloads/) 3.9+
 
 
 ## Setup Environment
-This setup only tested in GNU/Linux environment, for Windows replace all
-instances of `python3` with `python` (not tested).
-
-TODO: Check whether setup instruction works for Mac and Windows?
+This setup only tested in GNU/Linux environment. In Windows replacing all
+instances of `python3` with `python` may work (not tested).
 
 ```bash
-$ git clone https://github.com/sharedmem/marketplace.git
-$ cd /path/to/project/
+$ cd /path/to/project/pattern
 $ python3 -m venv --prompt . .venv # Create virtual environment.
 $ source .venv/bin/activate # Activate virtual environment.
 (marketplace) $ python3 -m pip install pipenv
@@ -44,18 +40,3 @@ $ source .venv/bin/activate # Activate virtual environment.
 ```
 
 Now open [http://127.0.0.1:8000](http://127.0.0.1:8000) in browser.
-
-
-# Branches
-Different git branch contains different implementation of architecture patterns,
-see below table for more information.
-
-TODO: Add link to Github branch and their corresponding architecture pattern's
-documentation.
-
-| Branch | Architecture Pattern |
-| :----: | :------------------: |
-|  main  | [Without any pattern](./docs/patterns.md) |
-|  mvt   | [Model View Template](./docs/patterns.md) (MVT) |
-| service | [Service Layer](./docs/patterns.md) |
-| repo | [Repository Pattern](./docs/patterns.md) (optional) |
