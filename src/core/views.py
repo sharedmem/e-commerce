@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Post, Comment, Like
 from .forms import CommentForm, PostForm
+from .services import PostService
 
 
 # Signup view.
@@ -43,23 +44,7 @@ def logout_view(request):
 # View for logged in user feed and public feed.
 def feed(request):
     # Fetch all media files.
-    posts = Post.objects.all().order_by("-created_at")
-
-    # Determine the media file type.
-    for post in posts:
-        if post.media_file.url.endswith(
-            (
-                ".gif",
-                ".jpeg",
-                ".jpg",
-                ".png",
-            )
-        ):
-            post.file_type = "image"
-        elif post.media_file.url.endswith((".avi", ".mov", ".mp4")):
-            post.file_type = "video"
-        else:
-            post.file_type = "unknown"
+    posts = PostService.get_all_feed()
     return render(request, "feed.html", {"posts": posts})
 
 
@@ -114,22 +99,11 @@ def comment_delete(request, pk):
 # View for liking a post.
 @login_required
 def like(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    like_obj, created = Like.objects.get_or_create(user=request.user, post=post)
-    if not created:
-        like_obj.delete()
-    like_count = Like.objects.filter(post=post).count()
+    like_count = PostService.get_like_count(request.user, pk)
     return redirect("feed")
 
 
 # View for showing a user's profile.
 def user_profile(request, username):
-    user = get_object_or_404(User, username=username)
-    posts = Post.objects.filter(user=user)
-    likes = Like.objects.filter(user=user)
-    context = {
-        "profile_user": user,
-        "posts": posts,
-        "likes": likes,
-    }
+    context = PostService(username)
     return render(request, "user_profile.html", context)
